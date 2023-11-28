@@ -2,9 +2,9 @@ version: '3.8'
 
 services:
   #Nginx Service
-  alegra-orders-server:
+  alegra-order-server:
     image: nginx:alpine
-    container_name: alegra-orders-server
+    container_name: alegra-order-server
     restart: unless-stopped
     tty: true
     ports:
@@ -13,34 +13,35 @@ services:
       - alegra-network
     volumes:
       - ./:/var/www/html/
+      - ./.docker/nginx/conf.d/:/etc/nginx/conf.d/
     depends_on:
-      - alegra-orders
-      - alegra-orders-db
+      - alegra-order
+      - alegra-order-db
 
   #MySQL Service
-  alegra-orders-db:
+  alegra-order-db:
     image: mysql:latest
-    container_name: alegra-orders-db
+    container_name: alegra-order-db
     restart: unless-stopped
     tty: true
     ports:
       - "3306:3306"
     environment:
-      MYSQL_DATABASE: alegra-orders-db
+      MYSQL_DATABASE: alegra-order-db
       MYSQL_ROOT_PASSWORD: alegraDB
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
     networks:
       - alegra-network
     volumes:
-      - alegra-db:/var/lib/mysql/
+      - alegra-order-volume:/var/lib/mysql/
 
   #PHP Service
-  alegra-orders:
+  alegra-order:
     build:
       context: .
     image: php:8.1-fpm
-    container_name: alegra-orders
+    container_name: alegra-order
     restart: unless-stopped
     tty: true
     working_dir: /var/www/html/
@@ -54,7 +55,7 @@ services:
   # Netshoot Service
   netshoot:
     image: nicolaka/netshoot
-    container_name: netshoot-container
+    container_name: netshoot-order-service
     restart: unless-stopped
     tty: true
     networks:
@@ -67,5 +68,5 @@ networks:
 
 #Volumes
 volumes:
-  alegra-db:
+  alegra-order-volume:
     driver: local
