@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\Status;
+use App\Http\Resources\OrderIndexResource;
 use App\Http\Resources\OrderResource;
 use App\Models\Order;
 use App\Services\KitchenService;
@@ -16,9 +17,17 @@ class OrderController extends Controller
     }
 
     /**
+     * @return AnonymousResourceCollection
+     */
+    public function index()
+    {
+        return OrderIndexResource::collection(Order::all());
+    }
+
+    /**
      * @return OrderResource
      */
-    public function __invoke()
+    public function store()
     {
         $recipe = $this->kitchenService->getRecipe();
 
