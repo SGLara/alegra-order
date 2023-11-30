@@ -27,7 +27,7 @@ class Order extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        //
+        'status' => Status::class
     ];
 
     /*

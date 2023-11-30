@@ -33,7 +33,7 @@ class OrderController extends Controller
 
         $order = Order::create([
             'recipe_id' => $recipe['id'],
-            'status' => 'completed'
+            'status' => collect(Status::values())->random(),
         ]);
 
         $order = collect($order->toArray())
