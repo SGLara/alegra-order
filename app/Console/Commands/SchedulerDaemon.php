@@ -14,14 +14,14 @@ class SchedulerDaemon extends Command
      *
      * @var string
      */
-    protected $signature = 'schedule:daemon {--sleep=60}';
+    protected $signature = 'schedule:daemon {--sleep=5}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Call the scheduler every minute.';
+    protected $description = 'Call the scheduler every 5 seconds.';
 
     /**
      * Execute the console command.
